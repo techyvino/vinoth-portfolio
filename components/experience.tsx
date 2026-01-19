@@ -115,7 +115,7 @@ function ExperienceCard({ exp, index }: { exp: Experience; index: number }) {
             <div>
               <div
                 className={cn(
-                  "text-xs font-black uppercase tracking-[0.2em] mb-2 bg-linear-to-r bg-clip-text text-transparent",
+                  "text-xs text-nowrap font-black uppercase tracking-[0.2em] mb-2 bg-linear-to-r bg-clip-text text-transparent",
                   exp.color,
                 )}
               >

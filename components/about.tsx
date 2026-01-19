@@ -4,7 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 
 const stats = [
-  { label: "Years Exp", value: 4.5, suffix: "+" },
+  { label: "Years Exp", value: 4.7, suffix: "+" },
   { label: "Performance Boost", value: 30, suffix: "%" },
   { label: "Boilerplate Red.", value: 50, suffix: "%" },
   { label: "Team Size", value: 3, suffix: "+" },

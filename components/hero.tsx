@@ -76,7 +76,10 @@ export function Hero() {
           animate="visible"
           className="space-y-4"
         >
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.9] flex flex-wrap justify-center gap-x-4">
+          <h1
+            className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.9] flex flex-nowrap
+           justify-center gap-x-4"
+          >
             {words.map((word, index) => (
               <motion.span
                 variants={child}
