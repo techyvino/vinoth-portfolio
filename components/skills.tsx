@@ -10,16 +10,15 @@ const skillCategories = [
     icon: Layout,
     skills: [
       "React.js",
-      "Next.js (App Router)",
+      "Next.js",
       "TypeScript",
-      "JavaScript (ES6+)",
+      "JavaScript",
       "Hono.js",
       "Express.js",
     ],
     color: "text-blue-500",
-    bg: "bg-blue-500/10",
-    border: "border-blue-500/20",
-    shadow: "shadow-blue-500/10",
+    bg: "bg-blue-500/5",
+    border: "border-blue-500/10",
   },
   {
     title: "State & Data",
@@ -27,15 +26,14 @@ const skillCategories = [
     skills: [
       "TanStack Query",
       "Redux Toolkit",
-      "Context API",
       "PostgreSQL",
       "Drizzle ORM",
       "RESTful APIs",
+      "Firebase",
     ],
     color: "text-emerald-500",
-    bg: "bg-emerald-500/10",
-    border: "border-emerald-500/20",
-    shadow: "shadow-emerald-500/10",
+    bg: "bg-emerald-500/5",
+    border: "border-emerald-500/10",
   },
   {
     title: "UI & Architecture",
@@ -43,31 +41,22 @@ const skillCategories = [
     skills: [
       "Tailwind CSS",
       "shadcn/ui",
-      "Material UI",
+      "Framer Motion",
       "Core Web Vitals",
-      "Code Splitting",
-      "Hydration Optimization",
+      "Unit Testing",
+      "Micro-frontends",
     ],
     color: "text-indigo-500",
-    bg: "bg-indigo-500/10",
-    border: "border-indigo-500/20",
-    shadow: "shadow-indigo-500/10",
+    bg: "bg-indigo-500/5",
+    border: "border-indigo-500/10",
   },
   {
-    title: "Tools & Testing",
+    title: "Tools & DevOps",
     icon: Cpu,
-    skills: [
-      "Jest",
-      "React Testing Library",
-      "Git",
-      "Azure DevOps",
-      "Vercel",
-      "Postman",
-    ],
+    skills: ["Git", "Azure DevOps", "Vercel", "Docker", "Jest", "Playwright"],
     color: "text-purple-500",
-    bg: "bg-purple-500/10",
-    border: "border-purple-500/20",
-    shadow: "shadow-purple-500/10",
+    bg: "bg-purple-500/5",
+    border: "border-purple-500/10",
   },
 ];
 
@@ -75,9 +64,7 @@ const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
+    transition: { staggerChildren: 0.1 },
   },
 };
 
@@ -86,10 +73,7 @@ const itemVariants: Variants = {
   visible: {
     y: 0,
     opacity: 1,
-    transition: {
-      type: "spring",
-      stiffness: 100,
-    },
+    transition: { type: "spring", stiffness: 100 },
   },
 };
 
@@ -97,31 +81,39 @@ export function Skills() {
   return (
     <Section
       id="skills"
-      className="bg-zinc-50/50 dark:bg-zinc-900/10 relative overflow-hidden"
+      className="py-32 relative overflow-hidden bg-zinc-50/10 dark:bg-black/20 noise"
     >
-      {/* Decorative background blur */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none opacity-30 dark:opacity-20">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/20 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/20 rounded-full blur-[120px]" />
-      </div>
-
-      <div className="max-w-6xl mx-auto relative z-10">
-        <div className="text-center space-y-4 mb-16">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-24">
+          <div className="space-y-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="inline-block px-4 py-1.5 rounded-full bg-indigo-500/10 text-indigo-500 text-xs font-bold uppercase tracking-widest"
+            >
+              Expertise
+            </motion.div>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-4xl md:text-7xl font-black tracking-tighter"
+            >
+              Technical <span className="text-gradient">Arsenal</span>
+            </motion.h2>
+          </div>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-block px-4 py-1.5 rounded-full bg-indigo-500/10 text-indigo-500 text-xs font-bold uppercase tracking-widest mb-2"
+            transition={{ delay: 0.2 }}
+            className="text-muted-foreground max-w-md text-lg font-medium"
           >
-            My Expertise
-          </motion.div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
-            Comprehensive <span className="text-indigo-500">Tech Stack</span>
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-            Specializing in modern frontend ecosystems with a strong focus on
-            performance, scalability, and exceptional user experiences.
-          </p>
+            A comprehensive set of tools and technologies I use to build
+            world-class digital products.
+          </motion.p>
         </div>
 
         <motion.div
@@ -129,58 +121,44 @@ export function Skills() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="grid md:grid-cols-2 lg:grid-cols-4 gap-8"
         >
           {skillCategories.map((category, idx) => (
             <motion.div
               key={idx}
               variants={itemVariants}
-              whileHover={{
-                y: -10,
-                transition: { duration: 0.3, ease: "easeOut" },
-              }}
-              className={`group p-8 rounded-4xl border ${category.border} ${category.bg} backdrop-blur-md space-y-8 relative overflow-hidden transition-all duration-500 hover:${category.shadow} hover:border-${category.color.split("-")[1]}-500/30`}
+              whileHover={{ y: -10 }}
+              className={`group p-8 rounded-[2.5rem] border ${category.border} ${category.bg} glass space-y-8 relative overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-indigo-500/5`}
             >
-              {/* Animated Inner Glow */}
-              <div className="absolute inset-0 bg-linear-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
               <div className="relative z-10 space-y-6">
                 <div
-                  className={`p-4 rounded-2xl bg-white dark:bg-zinc-950 w-fit ${category.color} shadow-lg shadow-black/5 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}
+                  className={`p-4 rounded-2xl bg-white dark:bg-zinc-900 w-fit ${category.color} shadow-lg shadow-black/5 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}
                 >
                   <category.icon size={32} strokeWidth={2.5} />
                 </div>
 
                 <div className="space-y-2">
-                  <h3 className="text-xl font-bold tracking-tight group-hover:text-indigo-500 transition-colors duration-300">
+                  <h3 className="text-xl font-black tracking-tight group-hover:text-indigo-500 transition-colors duration-300">
                     {category.title}
                   </h3>
                   <div className="h-1 w-12 bg-indigo-500/20 rounded-full group-hover:w-full transition-all duration-500" />
                 </div>
 
                 <ul className="space-y-4">
-                  {category.skills.map((skill, sIdx) => (
-                    <motion.li
+                  {category.skills.map((skill) => (
+                    <li
                       key={skill}
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.1 * idx + 0.05 * sIdx }}
-                      className="flex items-center gap-3 text-sm font-medium text-muted-foreground/80 group-hover:text-foreground transition-colors duration-300"
+                      className="flex items-center gap-3 text-sm font-bold text-muted-foreground group-hover:text-foreground transition-colors"
                     >
                       <CheckCircle2
                         size={16}
                         className={`${category.color} opacity-60 group-hover:opacity-100 transition-opacity`}
                       />
                       {skill}
-                    </motion.li>
+                    </li>
                   ))}
                 </ul>
               </div>
-
-              {/* Decorative corner element */}
-              <div
-                className={`absolute -bottom-6 -right-6 w-24 h-24 rounded-full ${category.bg} blur-2xl group-hover:scale-150 transition-transform duration-700`}
-              />
             </motion.div>
           ))}
         </motion.div>

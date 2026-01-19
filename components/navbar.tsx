@@ -29,25 +29,28 @@ export function Navbar() {
   return (
     <nav
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 py-4",
-        isScrolled
-          ? "bg-background/80 backdrop-blur-md border-b border-border/40 py-3"
-          : "bg-transparent",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-6",
+        isScrolled ? "py-4" : "py-8",
       )}
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <div
+        className={cn(
+          "max-w-5xl mx-auto flex items-center justify-between px-6 py-3 rounded-full transition-all duration-500",
+          isScrolled ? "glass shadow-2xl shadow-black/5" : "bg-transparent",
+        )}
+      >
         <motion.a
           href="#"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="text-2xl font-bold bg-linear-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent"
+          className="text-xl md:text-2xl font-black bg-linear-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent transform hover:scale-105 transition-transform"
         >
           Vinoth.dev
         </motion.a>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-6">
-          <div className="flex items-center gap-8 mr-4">
+        <div className="hidden md:flex items-center gap-8">
+          <div className="flex items-center gap-6">
             {navItems.map((item, i) => (
               <motion.a
                 key={item.name}
@@ -55,20 +58,21 @@ export function Navbar() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className="text-sm font-medium hover:text-indigo-500 transition-colors"
+                className="text-xs font-black uppercase tracking-widest text-muted-foreground hover:text-indigo-500 transition-colors relative group"
               >
                 {item.name}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-500 transition-all group-hover:with-full" />
               </motion.a>
             ))}
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 pl-4 border-l border-border/50">
             <ThemeToggle />
             <motion.a
               href="#contact"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-all active:scale-95 whitespace-nowrap"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-6 py-2.5 rounded-full bg-primary text-primary-foreground text-xs font-black uppercase tracking-widest hover:opacity-90 transition-all shadow-xl shadow-indigo-500/10"
             >
               Hire Me
             </motion.a>
@@ -79,10 +83,10 @@ export function Navbar() {
         <div className="md:hidden flex items-center gap-4">
           <ThemeToggle />
           <button
-            className="p-2"
+            className="p-2 rounded-full hover:bg-muted transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
@@ -91,26 +95,29 @@ export function Navbar() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-background border-b border-border overflow-hidden"
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            className="absolute top-24 left-6 right-6 md:hidden glass rounded-[2rem] p-8 border border-border shadow-2xl z-40"
           >
-            <div className="flex flex-col p-6 gap-4">
-              {navItems.map((item) => (
-                <a
+            <div className="flex flex-col gap-6">
+              {navItems.map((item, i) => (
+                <motion.a
                   key={item.name}
                   href={item.href}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 }}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-lg font-medium hover:text-indigo-500 transition-colors"
+                  className="text-xl font-black uppercase tracking-widest hover:text-indigo-500 transition-colors"
                 >
                   {item.name}
-                </a>
+                </motion.a>
               ))}
               <a
                 href="#contact"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full py-3 rounded-xl bg-primary text-primary-foreground text-center font-medium"
+                className="w-full py-5 rounded-2xl bg-indigo-500 text-white text-center font-black uppercase tracking-widest shadow-xl shadow-indigo-500/20"
               >
                 Hire Me
               </a>
