@@ -1,6 +1,7 @@
 "use client";
 
 import { Github, Heart, Linkedin, Sparkles } from "lucide-react";
+import { motion } from "framer-motion";
 
 export function Footer() {
   const navLinks = [
@@ -21,30 +22,72 @@ export function Footer() {
   ];
 
   return (
-    <footer className="py-32 border-t border-border/10 relative overflow-hidden noise">
+    <footer className="py-20 border-t border-border/10 relative overflow-hidden noise">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="flex flex-col items-center gap-24">
-          <div className="flex flex-col items-center gap-8">
-            <div className="text-5xl md:text-6xl font-black bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent transform  cursor-default tracking-tighter">
+          <motion.div
+            className="flex flex-col items-center gap-8"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <motion.div
+              className="text-5xl md:text-6xl font-black bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent cursor-default tracking-tighter"
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
               Vinoth.dev
-            </div>
-            <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/5 text-indigo-500 text-[10px] font-black uppercase tracking-[0.3em]">
-              <Sparkles size={12} /> Crafting Digital Excellence
-            </div>
-          </div>
+            </motion.div>
+            <motion.div
+              className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/5 text-indigo-500 text-[10px] font-black uppercase tracking-[0.3em]"
+              animate={{
+                boxShadow: [
+                  "0 0 0 0 rgba(99, 102, 241, 0)",
+                  "0 0 0 10px rgba(99, 102, 241, 0.1)",
+                  "0 0 0 0 rgba(99, 102, 241, 0)",
+                ],
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+              >
+                <Sparkles size={12} />
+              </motion.div>
+              Crafting Digital Excellence
+            </motion.div>
+          </motion.div>
 
-          <nav className="flex flex-wrap justify-center gap-x-16 gap-y-8">
-            {navLinks.map((link) => (
-              <a
+          <motion.nav
+            className="flex flex-wrap justify-center gap-x-16 gap-y-8"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            {navLinks.map((link, i) => (
+              <motion.a
                 key={link.name}
                 href={link.href}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                whileHover={{ y: -3 }}
                 className="text-xs font-black uppercase tracking-[0.3em] text-muted-foreground hover:text-indigo-500 transition-colors relative group"
               >
                 {link.name}
-                <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-indigo-500 transition-all group-hover:w-full" />
-              </a>
+                <motion.span
+                  className="absolute -bottom-2 left-0 h-0.5 bg-indigo-500"
+                  initial={{ width: 0 }}
+                  whileHover={{ width: "100%" }}
+                  transition={{ duration: 0.3 }}
+                />
+              </motion.a>
             ))}
-          </nav>
+          </motion.nav>
 
           <div className="h-px w-32 bg-linear-to-r from-transparent via-border/50 to-transparent" />
 
@@ -65,16 +108,19 @@ export function Footer() {
 
             <div className="flex items-center gap-6">
               {socialLinks.map((social) => (
-                <a
+                <motion.a
                   key={social.name}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-4 rounded-2xl bg-indigo-500/5 text-indigo-500 border border-indigo-500/10 hover:border-indigo-500/30 hover:bg-indigo-500 hover:text-white transition-all shadow-xl shadow-black/5"
                   aria-label={social.name}
+                  whileHover={{ scale: 1.1, rotate: 360 }}
+                  whileTap={{ scale: 0.9 }}
+                  transition={{ duration: 0.3 }}
+                  className="p-4 rounded-2xl bg-indigo-500/5 text-indigo-500 border border-indigo-500/10 hover:border-indigo-500/30 hover:bg-indigo-500 hover:text-white transition-all shadow-xl shadow-black/5"
                 >
                   <social.icon size={20} />
-                </a>
+                </motion.a>
               ))}
             </div>
           </div>

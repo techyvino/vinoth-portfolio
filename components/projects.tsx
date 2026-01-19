@@ -1,10 +1,13 @@
 "use client";
 
-import { motion, useMotionValue } from "framer-motion";
-import { Section } from "./section";
-import { Github, ArrowUpRight } from "lucide-react";
 import { BlurImage } from "@/components/ui/blur-image";
+import { TiltCard } from "@/components/ui/tilt-card";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
+import { ProjectModal } from "@/components/ui/project-modal";
+import { ArrowRight, ArrowUpRight, Github } from "lucide-react";
+import { useState } from "react";
+import { Section } from "./section";
 
 interface Project {
   title: string;
@@ -23,7 +26,7 @@ const projects: Project[] = [
     title: "United Airlines Agent Portal",
     description:
       "Enterprise React 18 cargo booking platform featuring multi-step complex workflows, real-time flight search, and automated AWB generation.",
-    tags: ["React 18", "Redux Toolkit", "Tailwind CSS", "Enterprise", "B2B"],
+    tags: ["React 18", "Redux Toolkit", "Tailwind CSS", "B2B"],
     image: "/united-airlines.png",
     link: "#",
     github: "#",
@@ -38,7 +41,7 @@ const projects: Project[] = [
     tags: ["Next.js 15", "TanStack Query", "Shadcn UI", "Server Actions"],
     image: "/mjurbanfit.png",
     link: "https://www.mjurbanfit.in/",
-    color: "from-purple-600/20 to-pink-600/20",
+    color: "from-purple-600/20 to-fuchsia-600/20",
     accent: "text-purple-500",
     border: "group-hover:border-purple-500/50",
   },
@@ -50,9 +53,9 @@ const projects: Project[] = [
     image: "/mjurbanfit-logo.png",
     link: "#",
     github: "#",
-    color: "from-zinc-600/20 to-slate-600/20",
-    accent: "text-zinc-500",
-    border: "group-hover:border-zinc-500/50",
+    color: "from-rose-600/20 to-red-600/20",
+    accent: "text-rose-500",
+    border: "group-hover:border-rose-500/50",
   },
   {
     title: "Thanzhi Tech (Credo v2)",
@@ -74,9 +77,9 @@ const projects: Project[] = [
     image: "/credo.png",
     link: "#",
     github: "#",
-    color: "from-cyan-600/20 to-blue-600/20",
-    accent: "text-cyan-500",
-    border: "group-hover:border-cyan-500/50",
+    color: "from-teal-600/20 to-cyan-600/20",
+    accent: "text-teal-500",
+    border: "group-hover:border-teal-500/50",
   },
   {
     title: "Bhaasyam Construction",
@@ -93,13 +96,13 @@ const projects: Project[] = [
     title: "Bhaasyam CRM Portal",
     description:
       "Internal CRM portal for managing leads, customers, and construction projects with real-time tracking and comprehensive analytics dashboard.",
-    tags: ["React", "Redux", "CRM", "Lead Management", "Analytics"],
+    tags: ["React", "Redux", "CRM", "Lead Management"],
     image: "/baashyaam.png",
     link: "#",
     github: "#",
-    color: "from-amber-600/20 to-orange-600/20",
-    accent: "text-amber-500",
-    border: "group-hover:border-amber-500/50",
+    color: "from-lime-600/20 to-yellow-600/20",
+    accent: "text-lime-500",
+    border: "group-hover:border-lime-500/50",
   },
   {
     title: "Space & Beauty",
@@ -114,147 +117,168 @@ const projects: Project[] = [
   },
 ];
 
-function ProjectCard({ project, index }: { project: Project; index: number }) {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  function handleMouseMove({
-    currentTarget,
-    clientX,
-    clientY,
-  }: React.MouseEvent) {
-    const { left, top } = currentTarget.getBoundingClientRect();
-    mouseX.set(clientX - left);
-    mouseY.set(clientY - top);
-  }
+function ProjectCard({
+  project,
+  index,
+  onOpen,
+}: {
+  project: Project;
+  index: number;
+  onOpen: () => void;
+}) {
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      className="group h-full"
+      initial={{ opacity: 0, y: 50, scale: 0.9 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      onMouseMove={handleMouseMove}
-      className={cn(
-        "group relative flex flex-col h-full rounded-[2.5rem] border border-border/50 bg-card/50 glass overflow-hidden transition-all duration-500",
-        project.border,
-      )}
+      transition={{
+        duration: 0.6,
+        delay: index * 0.1,
+        type: "spring",
+        stiffness: 100,
+        damping: 15,
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Spotlight Effect */}
-      {/* Spotlight Effect - Only show if clickable */}
-      {(project.link !== "#" || project.github !== "#") && (
+      <TiltCard
+        className={cn(
+          "group relative flex flex-col h-full rounded-[2.5rem] border border-border/50 bg-card glass overflow-hidden transition-all duration-500",
+          project.border,
+        )}
+      >
+        {/* Animated Border Gradient */}
         <motion.div
-          className="pointer-events-none absolute -inset-px rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          className="absolute inset-0 rounded-[2.5rem] opacity-70 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
           style={{
-            background: useMotionValue(
-              `radial-gradient(600px circle at 0px 0px, var(--indigo-500), transparent 40%)`,
-            ),
-            maskImage: useMotionValue(
-              `radial-gradient(600px circle at 0px 0px, black, transparent)`,
-            ),
-            WebkitMaskImage: useMotionValue(
-              `radial-gradient(600px circle at 0px 0px, black, transparent)`,
-            ),
+            background: `linear-gradient(135deg, ${project.color.replace("/20", "/40")})`,
+            padding: "2px",
+            WebkitMask:
+              "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+            WebkitMaskComposite: "xor",
+            maskComposite: "exclude",
+          }}
+          animate={{
+            rotate: [0, 360],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "linear",
           }}
         />
-      )}
 
-      {/* Background Gradient Layer */}
-      <div
-        className={cn(
-          "absolute inset-0 bg-linear-to-br opacity-5 group-hover:opacity-20 transition-opacity duration-500",
-          project.color,
-        )}
-      />
-
-      {/* Image Container */}
-      <div className="relative h-64 w-full overflow-hidden">
-        <BlurImage
-          src={project.image}
-          alt={project.title}
-          fill
-          loading="lazy"
-          className="object-cover scale-105 group-hover:scale-100 transition-transform duration-700 ease-out"
+        {/* Background Gradient Layer */}
+        <div
+          className={cn(
+            "absolute inset-0 bg-linear-to-br opacity-5 group-hover:opacity-20 transition-opacity duration-500",
+            project.color,
+          )}
         />
-        {(project.link !== "#" || project.github !== "#") && (
-          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 backdrop-blur-sm transition-all duration-500 flex items-center justify-center gap-4">
-            {project.github && project.github !== "#" && (
-              <motion.a
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                whileTap={{ scale: 0.9 }}
-                href={project.github}
-                className="p-4 rounded-full bg-white text-black shadow-2xl"
-              >
-                <Github size={20} />
-              </motion.a>
-            )}
-            {project.link && project.link !== "#" && (
-              <motion.a
-                whileHover={{ scale: 1.1, rotate: -5 }}
-                whileTap={{ scale: 0.9 }}
-                href={project.link}
-                className="p-4 rounded-full bg-indigo-500 text-white shadow-2xl flex items-center gap-2 font-black px-6"
-              >
-                Live <ArrowUpRight size={18} />
-              </motion.a>
-            )}
-          </div>
-        )}
-      </div>
 
-      {/* Content */}
-      <div className="p-10 flex flex-col grow space-y-6 relative z-10">
-        <div className="flex flex-wrap gap-2">
-          {project.tags.slice(0, 3).map((tag: string) => (
-            <span
-              key={tag}
-              className={cn(
-                "text-[10px] uppercase font-black tracking-widest px-3 py-1 rounded-full bg-background/50 border border-border/50",
-                project.accent,
-              )}
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        <div className="space-y-3">
-          <h3 className="text-2xl font-black tracking-tight group-hover:translate-x-1 transition-transform duration-300">
-            {project.title}
-          </h3>
-          <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3">
-            {project.description}
-          </p>
-        </div>
-
-        <div className="pt-6 mt-auto flex items-center justify-between border-t border-border/50">
-          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/50">
-            Details
-          </span>
-          {project.link && project.link !== "#" ? (
+        {/* Image Container */}
+        <div className="relative h-64 w-full overflow-hidden">
+          <BlurImage
+            src={project.image}
+            alt={project.title}
+            fill
+            loading="lazy"
+            className="bg-black/5 dark:bg-white/5 scale-105 group-hover:scale-100 transition-transform duration-700 ease-out"
+          />
+          {(project.link !== "#" || project.github !== "#") && (
             <motion.div
-              whileHover={{ x: 5 }}
-              className={cn(
-                "w-10 h-10 rounded-full border border-border flex items-center justify-center group-hover:bg-indigo-500 group-hover:text-white group-hover:border-indigo-500 transition-all cursor-pointer",
-                project.accent.replace("text-", "bg-").split(" ")[0] + "/10",
-              )}
+              className="absolute inset-0 bg-black/60 backdrop-blur-md transition-all duration-500 flex items-center justify-center gap-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: isHovered ? 1 : 0 }}
             >
-              <ArrowUpRight size={18} />
+              {project.github && project.github !== "#" && (
+                <motion.a
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  whileTap={{ scale: 0.9 }}
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-4 rounded-full bg-white text-black shadow-2xl"
+                >
+                  <Github size={20} />
+                </motion.a>
+              )}
+              {project.link && project.link !== "#" && (
+                <motion.a
+                  whileHover={{ scale: 1.1, rotate: -5 }}
+                  whileTap={{ scale: 0.9 }}
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-4 rounded-full bg-indigo-500 text-white shadow-2xl flex items-center gap-2 font-black px-6"
+                >
+                  Live <ArrowUpRight size={18} />
+                </motion.a>
+              )}
             </motion.div>
-          ) : (
-            <div className="w-10 h-10" />
           )}
         </div>
-      </div>
+
+        {/* Content */}
+        <div className="p-5 flex flex-col flex-1 justify-between relative z-10">
+          <div className="space-y-3">
+            <div className="flex flex-wrap gap-2">
+              {project.tags.map((tag: string) => (
+                <span
+                  key={tag}
+                  className={cn(
+                    "text-[10px] uppercase font-black tracking-widest px-3 py-1 rounded-full bg-background/50 border border-border/50",
+                    project.accent,
+                  )}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            <div className="space-y-1">
+              <h3 className="text-2xl font-black tracking-tight group-hover:translate-x-1 transition-transform duration-300">
+                {project.title}
+              </h3>
+              <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3">
+                {project.description}
+              </p>
+            </div>
+          </div>
+
+          <div className="pt-4">
+            <motion.button
+              onClick={onOpen}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className={cn(
+                "w-full py-2.5 rounded-xl bg-secondary/50 hover:bg-secondary text-xs font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-2 group/btn border border-border/50 hover:border-border",
+                project.accent.replace("text-", "text-"),
+              )}
+            >
+              Explore Details
+              <ArrowRight
+                size={14}
+                className="group-hover/btn:translate-x-1 transition-transform"
+              />
+            </motion.button>
+          </div>
+        </div>
+      </TiltCard>
     </motion.div>
   );
 }
 
 export function Projects() {
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
   return (
     <Section
       id="projects"
-      className="py-32 relative overflow-hidden bg-zinc-50/10 dark:bg-black/20 noise"
+      className="py-20 relative overflow-hidden bg-zinc-50/10 dark:bg-black/20 noise"
     >
       {/* Decorative Blur */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[120px] -z-10" />
@@ -293,12 +317,22 @@ export function Projects() {
           </motion.p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
           {projects.map((project, idx) => (
-            <ProjectCard key={idx} project={project} index={idx} />
+            <ProjectCard
+              key={idx}
+              project={project}
+              index={idx}
+              onOpen={() => setSelectedProject(project)}
+            />
           ))}
         </div>
       </div>
+      <ProjectModal
+        isOpen={!!selectedProject}
+        onClose={() => setSelectedProject(null)}
+        project={selectedProject}
+      />
     </Section>
   );
 }

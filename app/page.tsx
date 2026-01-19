@@ -9,6 +9,8 @@ import { About } from "@/components/about";
 import { Experience } from "@/components/experience";
 import { Contact } from "@/components/contact";
 import { Footer } from "@/components/footer";
+import { PageLoader } from "@/components/ui/page-loader";
+import { ScrollToTop } from "@/components/ui/scroll-to-top";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -19,23 +21,20 @@ export default function Home() {
     restDelta: 0.001,
   });
 
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    // Any initialization code can go here
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-background text-foreground selection:bg-indigo-500/30 noise">
-      {/* Scroll Progress Bar */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-indigo-500 origin-left z-100"
-        style={{ scaleX }}
-      />
+    <>
+      <PageLoader />
+      
+      <div className="relative min-h-screen bg-background text-foreground selection:bg-indigo-500/30 noise">
+        {/* Scroll Progress Bar */}
+        <motion.div
+          className="fixed top-0 left-0 right-0 h-1 bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 origin-left z-[100]"
+          style={{ scaleX }}
+        />
 
       <Navbar />
 
@@ -49,6 +48,10 @@ export default function Home() {
       </main>
 
       <Footer />
-    </div>
+        
+        {/* Scroll to Top Button */}
+        <ScrollToTop />
+      </div>
+    </>
   );
 }

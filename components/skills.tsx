@@ -3,6 +3,8 @@
 import { motion, Variants } from "framer-motion";
 import { Section } from "./section";
 import { Layout, Layers, Database, Cpu, CheckCircle2 } from "lucide-react";
+import { TiltCard } from "./ui/tilt-card";
+import { TextReveal } from "./ui/text-reveal";
 
 const skillCategories = [
   {
@@ -81,7 +83,7 @@ export function Skills() {
   return (
     <Section
       id="skills"
-      className="py-32 relative overflow-hidden bg-zinc-50/10 dark:bg-black/20 noise"
+      className="py-20 relative overflow-hidden bg-zinc-50/10 dark:bg-black/20 noise"
     >
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-24">
@@ -124,41 +126,74 @@ export function Skills() {
           className="grid md:grid-cols-2 lg:grid-cols-4 gap-8"
         >
           {skillCategories.map((category, idx) => (
-            <motion.div
-              key={idx}
-              variants={itemVariants}
-              whileHover={{ y: -10 }}
-              className={`group p-8 rounded-[2.5rem] border ${category.border} ${category.bg} glass space-y-8 relative overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-indigo-500/5`}
-            >
-              <div className="relative z-10 space-y-6">
-                <div
-                  className={`p-4 rounded-2xl bg-white dark:bg-zinc-900 w-fit ${category.color} shadow-lg shadow-black/5 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}
-                >
-                  <category.icon size={32} strokeWidth={2.5} />
-                </div>
+            <motion.div key={idx} variants={itemVariants}>
+              <TiltCard
+                className={`group p-8 rounded-[2.5rem] border ${category.border} ${category.bg} glass space-y-8 relative overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-indigo-500/10`}
+              >
+                {/* Animated background glow */}
+                <motion.div
+                  className={`absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-700 blur-2xl bg-linear-to-br ${category.color.replace("text-", "from-")} to-transparent`}
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    rotate: [0, 90, 0],
+                  }}
+                  transition={{
+                    duration: 10,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                />
 
-                <div className="space-y-2">
-                  <h3 className="text-xl font-black tracking-tight group-hover:text-indigo-500 transition-colors duration-300">
-                    {category.title}
-                  </h3>
-                  <div className="h-1 w-12 bg-indigo-500/20 rounded-full group-hover:w-full transition-all duration-500" />
-                </div>
+                <div className="relative z-10 space-y-6">
+                  <motion.div
+                    className={`p-4 rounded-2xl bg-white dark:bg-zinc-900 w-fit ${category.color} shadow-lg shadow-black/5`}
+                    whileHover={{
+                      scale: 1.1,
+                      rotate: [0, -10, 10, -10, 0],
+                    }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <category.icon size={32} strokeWidth={2.5} />
+                  </motion.div>
 
-                <ul className="space-y-4">
-                  {category.skills.map((skill) => (
-                    <li
-                      key={skill}
-                      className="flex items-center gap-3 text-sm font-bold text-muted-foreground group-hover:text-foreground transition-colors"
-                    >
-                      <CheckCircle2
-                        size={16}
-                        className={`${category.color} opacity-60 group-hover:opacity-100 transition-opacity`}
-                      />
-                      {skill}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                  <div className="space-y-2">
+                    <h3 className="text-xl font-black tracking-tight group-hover:text-indigo-500 transition-colors duration-300">
+                      {category.title}
+                    </h3>
+                    <motion.div
+                      className="h-1 bg-indigo-500/20 rounded-full"
+                      initial={{ width: "3rem" }}
+                      whileInView={{ width: "100%" }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.8, delay: idx * 0.1 }}
+                    />
+                  </div>
+
+                  <ul className="space-y-4">
+                    {category.skills.map((skill, skillIdx) => (
+                      <motion.li
+                        key={skill}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: skillIdx * 0.05 }}
+                        className="flex items-center gap-3 text-sm font-bold text-muted-foreground group-hover:text-foreground transition-colors"
+                      >
+                        <motion.div
+                          whileHover={{ scale: 1.3, rotate: 360 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <CheckCircle2
+                            size={16}
+                            className={`${category.color} opacity-60 group-hover:opacity-100 transition-opacity`}
+                          />
+                        </motion.div>
+                        {skill}
+                      </motion.li>
+                    ))}
+                  </ul>
+                </div>
+              </TiltCard>
             </motion.div>
           ))}
         </motion.div>

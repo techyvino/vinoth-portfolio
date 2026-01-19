@@ -1,11 +1,22 @@
 "use client";
 
-import { motion, Variants } from "framer-motion";
+import { motion, Variants, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Github, Linkedin, ExternalLink } from "lucide-react";
 import { FloatingShape } from "./ui/floating-shape";
+import { AnimatedGradient } from "./ui/animated-gradient";
+import { useRef } from "react";
 
 export function Hero() {
   const words = "Vinothkumar S".split(" ");
+  const ref = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   const container: Variants = {
     hidden: { opacity: 0 },
@@ -37,9 +48,10 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-[95vh] flex items-center justify-center overflow-hidden pt-20 noise">
+    <section ref={ref} className="relative min-h-[95vh] flex items-center justify-center overflow-hidden pt-20 noise">
       {/* Premium Background */}
       <div className="absolute inset-0 -z-10 bg-gradient-mesh">
+        <AnimatedGradient />
         <FloatingShape
           className="bg-indigo-500 w-64 h-64 top-1/4 -left-12"
           delay={0}
@@ -56,7 +68,10 @@ export function Hero() {
         />
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 text-center z-10">
+      <motion.div 
+        style={{ y, opacity }}
+        className="max-w-6xl mx-auto px-6 text-center z-10"
+      >
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -112,17 +127,24 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 1 }}
           className="flex flex-wrap items-center justify-center gap-6 mt-12"
         >
-          <a
+          <motion.a
             href="#projects"
-            className="group relative px-8 py-5 rounded-3xl bg-primary text-primary-foreground font-bold flex items-center gap-3 transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-indigo-500/20"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="group relative px-8 py-5 rounded-3xl bg-primary text-primary-foreground font-bold flex items-center gap-3 transition-all shadow-2xl shadow-indigo-500/20 overflow-hidden"
           >
-            Explore Projects
+            <span className="relative z-10">Explore Projects</span>
             <ArrowRight
               size={20}
-              className="group-hover:translate-x-1 transition-transform"
+              className="group-hover:translate-x-1 transition-transform relative z-10"
             />
-            <div className="absolute inset-0 rounded-3xl bg-linear-to-r from-indigo-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-          </a>
+            <motion.div 
+              className="absolute inset-0 bg-linear-to-r from-indigo-600 to-purple-600"
+              initial={{ x: "-100%" }}
+              whileHover={{ x: 0 }}
+              transition={{ duration: 0.3 }}
+            />
+          </motion.a>
 
           <div className="flex items-center gap-3">
             {[
@@ -137,22 +159,24 @@ export function Hero() {
                 label: "LinkedIn",
               },
             ].map((social, i) => (
-              <a
+              <motion.a
                 key={i}
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
                 className="p-4 rounded-2xl border border-border glass hover:border-indigo-500/50 hover:bg-indigo-500/5 transition-all text-muted-foreground hover:text-indigo-500 group"
               >
                 <social.icon
                   size={22}
-                  className="group-hover:scale-110 transition-transform"
+                  className="group-hover:scale-110 group-hover:rotate-12 transition-all duration-300"
                 />
-              </a>
+              </motion.a>
             ))}
           </div>
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* Advanced Scroll Indicator */}
       <motion.div

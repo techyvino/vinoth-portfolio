@@ -175,6 +175,8 @@
 
   .text-gradient {
     @apply bg-clip-text text-transparent bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500;
+    animation: gradient-shift 8s ease infinite;
+    background-size: 200% 200%;
   }
 
   .bg-gradient-mesh {
@@ -184,6 +186,41 @@
       radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.15) 0px, transparent 50%),
       radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.15) 0px, transparent 50%),
       radial-gradient(at 0% 100%, rgba(79, 70, 229, 0.15) 0px, transparent 50%);
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(99, 102, 241, 0.6);
+    }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
   }
 }
 

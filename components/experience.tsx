@@ -91,16 +91,21 @@ function ExperienceCard({ exp, index }: { exp: Experience; index: number }) {
 
       {/* Content */}
       <motion.div
-        initial={{ opacity: 0, x: isEven ? 50 : -50 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true, margin: "-100px", amount: 0.2 }}
+        initial={{ opacity: 0, x: isEven ? 30 : -30, scale: 0.95 }}
+        whileInView={{ opacity: 1, x: 0, scale: 1 }}
+        viewport={{ once: true, amount: 0.1 }}
         transition={{
-          duration: 0.7,
-          delay: index * 0.1,
+          duration: 0.4,
+          delay: index * 0.05,
           type: "spring",
+          stiffness: 200,
           damping: 20,
         }}
-        className="w-[calc(100%-4rem)] md:w-[42%] p-8 md:p-10 rounded-[2.5rem] border border-border/50 bg-card/50 glass hover:border-indigo-500/30 transition-all duration-500 relative overflow-hidden group/card"
+        whileHover={{
+          y: -10,
+          boxShadow: "0 20px 60px rgba(99, 102, 241, 0.15)",
+        }}
+        className="w-[calc(100%-4rem)] md:w-[42%] p-8 md:p-10 rounded-[2.5rem] border border-border/50 bg-card/50 glass hover:border-indigo-500/30 transition-all duration-500 relative overflow-hidden group/card cursor-pointer"
       >
         {/* Glow Effect */}
         <div
@@ -136,17 +141,26 @@ function ExperienceCard({ exp, index }: { exp: Experience; index: number }) {
 
           <div className="space-y-3">
             {exp.achievements.map((item: string, i: number) => (
-              <div key={i} className="flex items-start gap-3 group/item">
-                <div
+              <motion.div
+                key={i}
+                className="flex items-start gap-3 group/item"
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <motion.div
                   className={cn(
-                    "mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 group-hover/item:scale-150 transition-transform bg-linear-to-br",
+                    "mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 bg-linear-to-br",
                     exp.color,
                   )}
+                  whileHover={{ scale: 2, rotate: 360 }}
+                  transition={{ duration: 0.3 }}
                 />
                 <span className="text-sm font-medium text-muted-foreground group-hover/item:text-foreground transition-colors">
                   {item}
                 </span>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -174,14 +188,15 @@ export function Experience() {
   return (
     <Section
       id="experience"
-      className="py-32 relative overflow-hidden bg-zinc-50/10 dark:bg-black/20 noise"
+      className="py-20 relative overflow-hidden bg-zinc-50/10 dark:bg-black/20 noise"
     >
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col items-center text-center space-y-6 mb-32">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5 }}
             className="px-4 py-1.5 rounded-full bg-indigo-500/10 text-indigo-500 text-xs font-black uppercase tracking-widest"
           >
             Journey
@@ -189,7 +204,8 @@ export function Experience() {
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
             className="text-4xl md:text-7xl font-black tracking-tighter"
           >
             Work <span className="text-gradient">History</span>
@@ -218,7 +234,8 @@ export function Experience() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
           className="mt-32 flex justify-center"
         >
           <div className="flex items-center gap-4 text-muted-foreground font-black uppercase tracking-[0.2em] text-xs">

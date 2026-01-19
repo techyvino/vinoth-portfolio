@@ -43,7 +43,8 @@ export function Navbar() {
           href="#"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="text-xl md:text-2xl font-black bg-linear-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent transform hover:scale-105 transition-transform"
+          whileHover={{ scale: 1.05 }}
+          className="text-xl md:text-2xl font-black bg-linear-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent transition-all"
         >
           Vinoth.dev
         </motion.a>
@@ -58,10 +59,16 @@ export function Navbar() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
+                whileHover={{ y: -2 }}
                 className="text-xs font-black uppercase tracking-widest text-muted-foreground hover:text-indigo-500 transition-colors relative group"
               >
                 {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-500 transition-all group-hover:w-full" />
+                <motion.span 
+                  className="absolute -bottom-1 left-0 h-0.5 bg-indigo-500"
+                  initial={{ width: 0 }}
+                  whileHover={{ width: "100%" }}
+                  transition={{ duration: 0.3 }}
+                />
               </motion.a>
             ))}
           </div>
@@ -72,8 +79,9 @@ export function Navbar() {
             <motion.a
               href="/Vinothkumar Senior Software Developer.pdf"
               download="Vinothkumar_Senior_Software_Engineer.pdf"
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05, rotate: 360 }}
               whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.3 }}
               className="p-2.5 rounded-full bg-indigo-500/10 text-indigo-500 hover:bg-indigo-500 hover:text-white transition-all"
               aria-label="Download Resume"
             >
@@ -84,9 +92,15 @@ export function Navbar() {
               href="#contact"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-6 py-2.5 rounded-full bg-primary text-primary-foreground text-xs font-black uppercase tracking-widest hover:opacity-90 transition-all shadow-xl shadow-indigo-500/10"
+              className="px-6 py-2.5 rounded-full bg-primary text-primary-foreground text-xs font-black uppercase tracking-widest transition-all shadow-xl shadow-indigo-500/10 relative overflow-hidden group"
             >
-              Hire Me
+              <span className="relative z-10">Hire Me</span>
+              <motion.div
+                className="absolute inset-0 bg-linear-to-r from-indigo-600 to-purple-600"
+                initial={{ x: "-100%" }}
+                whileHover={{ x: 0 }}
+                transition={{ duration: 0.3 }}
+              />
             </motion.a>
           </div>
         </div>
