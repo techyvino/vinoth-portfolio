@@ -95,7 +95,7 @@ export function Contact() {
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
-                  transition={{ delay: i * 0.1 }}
+                  transition={{ delay: i * 0.05 }}
                   whileHover={{ scale: 1.02 }}
                   className="flex items-center gap-6 p-6 rounded-3xl border border-border glass hover:border-indigo-500/30 transition-all group relative overflow-hidden"
                 >
@@ -134,7 +134,7 @@ export function Contact() {
             initial={{ opacity: 0, scale: 0.95, y: 30 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, type: "spring" }}
+            transition={{ duration: 0.4, type: "spring" as const }}
             className="p-8 md:p-12 rounded-[3rem] border border-border glass shadow-2xl shadow-indigo-500/5 relative overflow-hidden"
           >
             {/* Animated background gradient */}

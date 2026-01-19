@@ -22,7 +22,7 @@ export function Hero() {
     hidden: { opacity: 0 },
     visible: (i = 1) => ({
       opacity: 1,
-      transition: { staggerChildren: 0.12, delayChildren: 0.04 * i },
+      transition: { staggerChildren: 0.08, delayChildren: 0.02 * i },
     }),
   };
 
@@ -31,7 +31,7 @@ export function Hero() {
       opacity: 1,
       y: 0,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         damping: 12,
         stiffness: 100,
       },
@@ -40,7 +40,7 @@ export function Hero() {
       opacity: 0,
       y: 20,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         damping: 12,
         stiffness: 100,
       },
@@ -48,7 +48,10 @@ export function Hero() {
   };
 
   return (
-    <section ref={ref} className="relative min-h-[95vh] flex items-center justify-center overflow-hidden pt-20 noise">
+    <section
+      ref={ref}
+      className="relative min-h-[95vh] flex items-center justify-center overflow-hidden pt-20 noise"
+    >
       {/* Premium Background */}
       <div className="absolute inset-0 -z-10 bg-gradient-mesh">
         <AnimatedGradient />
@@ -68,14 +71,14 @@ export function Hero() {
         />
       </div>
 
-      <motion.div 
+      <motion.div
         style={{ y, opacity }}
         className="max-w-6xl mx-auto px-6 text-center z-10"
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, type: "spring" }}
+          transition={{ duration: 0.3, type: "spring" as const }}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-indigo-500/20 bg-indigo-500/5 backdrop-blur-md text-indigo-500 text-xs font-bold uppercase tracking-widest mb-8"
         >
           <span className="relative flex h-2 w-2">
@@ -112,7 +115,7 @@ export function Hero() {
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
           className="max-w-2xl mx-auto text-xl md:text-2xl text-muted-foreground mt-8 font-medium tracking-tight"
         >
           Architecting high-performance digital experiences with{" "}
@@ -124,7 +127,7 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
           className="flex flex-wrap items-center justify-center gap-6 mt-12"
         >
           <motion.a
@@ -138,7 +141,7 @@ export function Hero() {
               size={20}
               className="group-hover:translate-x-1 transition-transform relative z-10"
             />
-            <motion.div 
+            <motion.div
               className="absolute inset-0 bg-linear-to-r from-indigo-600 to-purple-600"
               initial={{ x: "-100%" }}
               whileHover={{ x: 0 }}

@@ -37,7 +37,6 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          <SmoothScroll />
           {children}
           <Toaster position="top-center" richColors />
         </ThemeProvider>

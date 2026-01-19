@@ -135,11 +135,11 @@ function ProjectCard({
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{
-        duration: 0.6,
-        delay: index * 0.1,
-        type: "spring",
-        stiffness: 100,
-        damping: 15,
+        duration: 0.4,
+        delay: index * 0.05,
+        type: "spring" as const,
+        stiffness: 150,
+        damping: 18,
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
