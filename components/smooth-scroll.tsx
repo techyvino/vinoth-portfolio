@@ -27,22 +27,23 @@ export function SmoothScroll() {
     // Integrate Lenis with GSAP ScrollTrigger
     lenis.on("scroll", ScrollTrigger.update);
 
-    gsap.ticker.add((time) => {
+    const updateLenis = (time: number) => {
       lenis.raf(time * 1000);
-    });
+    };
 
+    gsap.ticker.add(updateLenis);
     gsap.ticker.lagSmoothing(0);
 
     // Handle anchor links
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const anchor = target.closest('a[href^="#"]');
-      
+
       if (anchor) {
         e.preventDefault();
         const href = anchor.getAttribute("href");
         if (href && href !== "#") {
-          const element = document.querySelector(href);
+          const element = document.querySelector(href) as HTMLElement;
           if (element) {
             lenis.scrollTo(element, {
               offset: -80,
@@ -57,9 +58,7 @@ export function SmoothScroll() {
 
     return () => {
       lenis.destroy();
-      gsap.ticker.remove((time) => {
-        lenis.raf(time * 1000);
-      });
+      gsap.ticker.remove(updateLenis);
       document.removeEventListener("click", handleAnchorClick);
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
