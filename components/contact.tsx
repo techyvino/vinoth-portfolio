@@ -66,7 +66,7 @@ export function Contact() {
                 {
                   icon: MapPin,
                   label: "Location",
-                  value: "Chennai, IN 600117",
+                  value: "Chennai, IN 600129",
                   href: "#",
                 },
                 {
