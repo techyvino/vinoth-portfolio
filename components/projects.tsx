@@ -3,7 +3,7 @@
 import { motion, useMotionValue } from "framer-motion";
 import { Section } from "./section";
 import { Github, ArrowUpRight } from "lucide-react";
-import Image from "next/image";
+import { BlurImage } from "@/components/ui/blur-image";
 import { cn } from "@/lib/utils";
 
 interface Project {
@@ -169,7 +169,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
       {/* Image Container */}
       <div className="relative h-64 w-full overflow-hidden">
-        <Image
+        <BlurImage
           src={project.image}
           alt={project.title}
           fill
