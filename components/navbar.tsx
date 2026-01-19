@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Download } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
 
 const navItems = [
@@ -35,7 +35,7 @@ export function Navbar() {
     >
       <div
         className={cn(
-          "max-w-5xl mx-auto flex items-center justify-between px-6 py-3 rounded-full transition-all duration-500",
+          "max-w-6xl mx-auto flex items-center justify-between px-6 py-3 rounded-full transition-all duration-500",
           isScrolled ? "glass shadow-2xl shadow-black/5" : "bg-transparent",
         )}
       >
@@ -61,13 +61,25 @@ export function Navbar() {
                 className="text-xs font-black uppercase tracking-widest text-muted-foreground hover:text-indigo-500 transition-colors relative group"
               >
                 {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-500 transition-all group-hover:with-full" />
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-500 transition-all group-hover:w-full" />
               </motion.a>
             ))}
           </div>
 
           <div className="flex items-center gap-4 pl-4 border-l border-border/50">
             <ThemeToggle />
+
+            <motion.a
+              href="/Vinothkumar Senior Software Developer.pdf"
+              download="Vinothkumar_Senior_Software_Engineer.pdf"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="p-2.5 rounded-full bg-indigo-500/10 text-indigo-500 hover:bg-indigo-500 hover:text-white transition-all"
+              aria-label="Download Resume"
+            >
+              <Download size={18} />
+            </motion.a>
+
             <motion.a
               href="#contact"
               whileHover={{ scale: 1.05 }}
@@ -98,7 +110,7 @@ export function Navbar() {
             initial={{ opacity: 0, y: -20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.95 }}
-            className="absolute top-24 left-6 right-6 md:hidden glass rounded-[2rem] p-8 border border-border shadow-2xl z-40"
+            className="absolute top-24 left-6 right-6 md:hidden glass rounded-4xl p-8 border border-border shadow-2xl z-40"
           >
             <div className="flex flex-col gap-6">
               {navItems.map((item, i) => (
@@ -114,13 +126,22 @@ export function Navbar() {
                   {item.name}
                 </motion.a>
               ))}
-              <a
-                href="#contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full py-5 rounded-2xl bg-indigo-500 text-white text-center font-black uppercase tracking-widest shadow-xl shadow-indigo-500/20"
-              >
-                Hire Me
-              </a>
+              <div className="flex flex-col gap-4 mt-4">
+                <a
+                  href="/Vinothkumar Senior Software Developer.pdf"
+                  download="Vinothkumar_Senior_Software_Engineer.pdf"
+                  className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl bg-indigo-500/10 text-indigo-500 font-black uppercase tracking-widest hover:bg-indigo-500 hover:text-white transition-all"
+                >
+                  <Download size={18} /> Resume
+                </a>
+                <a
+                  href="#contact"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full py-4 rounded-2xl bg-indigo-500 text-white text-center font-black uppercase tracking-widest shadow-xl shadow-indigo-500/20"
+                >
+                  Hire Me
+                </a>
+              </div>
             </div>
           </motion.div>
         )}

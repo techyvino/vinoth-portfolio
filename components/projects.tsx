@@ -32,6 +32,29 @@ const projects: Project[] = [
     border: "group-hover:border-blue-500/50",
   },
   {
+    title: "MJ Urban Fit",
+    description:
+      "Modern e-commerce platform built with Next.js 15, featuring TanStack Query for state and Server Actions for seamless user interactions.",
+    tags: ["Next.js 15", "TanStack Query", "Shadcn UI", "Server Actions"],
+    image: "/mjurbanfit.png",
+    link: "https://www.mjurbanfit.in/",
+    color: "from-purple-600/20 to-pink-600/20",
+    accent: "text-purple-500",
+    border: "group-hover:border-purple-500/50",
+  },
+  {
+    title: "MJ Admin Portal",
+    description:
+      "Comprehensive administration dashboard for MJ Urban Fit to manage products and orders. Built with high-performance execution patterns.",
+    tags: ["Next.js", "PostgreSQL", "Inventory", "Analytics"],
+    image: "/mjurbanfit-logo.png",
+    link: "#",
+    github: "#",
+    color: "from-zinc-600/20 to-slate-600/20",
+    accent: "text-zinc-500",
+    border: "group-hover:border-zinc-500/50",
+  },
+  {
     title: "Thanzhi Tech (Credo v2)",
     description:
       "Multi-tenant healthcare PaaS enabling hospital onboarding with isolated data, HIPAA compliance, and performant Next.js Server Components.",
@@ -56,17 +79,6 @@ const projects: Project[] = [
     border: "group-hover:border-cyan-500/50",
   },
   {
-    title: "MJ Urban Fit",
-    description:
-      "Modern e-commerce platform built with Next.js 15, featuring TanStack Query for state and Server Actions for seamless user interactions.",
-    tags: ["Next.js 15", "TanStack Query", "Shadcn UI", "Server Actions"],
-    image: "/mjurbanfit.png",
-    link: "https://www.mjurbanfit.in/",
-    color: "from-purple-600/20 to-pink-600/20",
-    accent: "text-purple-500",
-    border: "group-hover:border-purple-500/50",
-  },
-  {
     title: "Bhaasyam Construction",
     description:
       "Modern and SEO-optimized corporate website built with Gatsby and GraphQL for lightning-fast performance and superior user experience.",
@@ -83,6 +95,8 @@ const projects: Project[] = [
       "Internal CRM portal for managing leads, customers, and construction projects with real-time tracking and comprehensive analytics dashboard.",
     tags: ["React", "Redux", "CRM", "Lead Management", "Analytics"],
     image: "/baashyaam.png",
+    link: "#",
+    github: "#",
     color: "from-amber-600/20 to-orange-600/20",
     accent: "text-amber-500",
     border: "group-hover:border-amber-500/50",
@@ -97,16 +111,6 @@ const projects: Project[] = [
     color: "from-pink-600/20 to-rose-600/20",
     accent: "text-pink-500",
     border: "group-hover:border-pink-500/50",
-  },
-  {
-    title: "MJ Admin Portal",
-    description:
-      "Comprehensive administration dashboard for MJ Urban Fit to manage products and orders. Built with high-performance execution patterns.",
-    tags: ["Next.js", "PostgreSQL", "Inventory", "Analytics"],
-    image: "/mjurbanfit-logo.png",
-    color: "from-zinc-600/20 to-slate-600/20",
-    accent: "text-zinc-500",
-    border: "group-hover:border-zinc-500/50",
   },
 ];
 
@@ -128,7 +132,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       onMouseMove={handleMouseMove}
       className={cn(
@@ -137,20 +141,23 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       )}
     >
       {/* Spotlight Effect */}
-      <motion.div
-        className="pointer-events-none absolute -inset-px rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{
-          background: useMotionValue(
-            `radial-gradient(600px circle at 0px 0px, var(--indigo-500), transparent 40%)`,
-          ),
-          maskImage: useMotionValue(
-            `radial-gradient(600px circle at 0px 0px, black, transparent)`,
-          ),
-          WebkitMaskImage: useMotionValue(
-            `radial-gradient(600px circle at 0px 0px, black, transparent)`,
-          ),
-        }}
-      />
+      {/* Spotlight Effect - Only show if clickable */}
+      {(project.link !== "#" || project.github !== "#") && (
+        <motion.div
+          className="pointer-events-none absolute -inset-px rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          style={{
+            background: useMotionValue(
+              `radial-gradient(600px circle at 0px 0px, var(--indigo-500), transparent 40%)`,
+            ),
+            maskImage: useMotionValue(
+              `radial-gradient(600px circle at 0px 0px, black, transparent)`,
+            ),
+            WebkitMaskImage: useMotionValue(
+              `radial-gradient(600px circle at 0px 0px, black, transparent)`,
+            ),
+          }}
+        />
+      )}
 
       {/* Background Gradient Layer */}
       <div
@@ -168,28 +175,30 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           fill
           className="object-cover scale-105 group-hover:scale-100 transition-transform duration-700 ease-out"
         />
-        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 backdrop-blur-sm transition-all duration-500 flex items-center justify-center gap-4">
-          {project.github && project.github !== "#" && (
-            <motion.a
-              whileHover={{ scale: 1.1, rotate: 5 }}
-              whileTap={{ scale: 0.9 }}
-              href={project.github}
-              className="p-4 rounded-full bg-white text-black shadow-2xl"
-            >
-              <Github size={20} />
-            </motion.a>
-          )}
-          {project.link && project.link !== "#" && (
-            <motion.a
-              whileHover={{ scale: 1.1, rotate: -5 }}
-              whileTap={{ scale: 0.9 }}
-              href={project.link}
-              className="p-4 rounded-full bg-indigo-500 text-white shadow-2xl flex items-center gap-2 font-black px-6"
-            >
-              Live <ArrowUpRight size={18} />
-            </motion.a>
-          )}
-        </div>
+        {(project.link !== "#" || project.github !== "#") && (
+          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 backdrop-blur-sm transition-all duration-500 flex items-center justify-center gap-4">
+            {project.github && project.github !== "#" && (
+              <motion.a
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                whileTap={{ scale: 0.9 }}
+                href={project.github}
+                className="p-4 rounded-full bg-white text-black shadow-2xl"
+              >
+                <Github size={20} />
+              </motion.a>
+            )}
+            {project.link && project.link !== "#" && (
+              <motion.a
+                whileHover={{ scale: 1.1, rotate: -5 }}
+                whileTap={{ scale: 0.9 }}
+                href={project.link}
+                className="p-4 rounded-full bg-indigo-500 text-white shadow-2xl flex items-center gap-2 font-black px-6"
+              >
+                Live <ArrowUpRight size={18} />
+              </motion.a>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Content */}
@@ -221,15 +230,19 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/50">
             Details
           </span>
-          <motion.div
-            whileHover={{ x: 5 }}
-            className={cn(
-              "w-10 h-10 rounded-full border border-border flex items-center justify-center group-hover:bg-indigo-500 group-hover:text-white group-hover:border-indigo-500 transition-all",
-              project.accent.replace("text-", "bg-").split(" ")[0] + "/10",
-            )}
-          >
-            <ArrowUpRight size={18} />
-          </motion.div>
+          {project.link && project.link !== "#" ? (
+            <motion.div
+              whileHover={{ x: 5 }}
+              className={cn(
+                "w-10 h-10 rounded-full border border-border flex items-center justify-center group-hover:bg-indigo-500 group-hover:text-white group-hover:border-indigo-500 transition-all cursor-pointer",
+                project.accent.replace("text-", "bg-").split(" ")[0] + "/10",
+              )}
+            >
+              <ArrowUpRight size={18} />
+            </motion.div>
+          ) : (
+            <div className="w-10 h-10" />
+          )}
         </div>
       </div>
     </motion.div>
@@ -252,7 +265,7 @@ export function Projects() {
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.3 }}
               className="inline-block px-4 py-1.5 rounded-full bg-indigo-500/10 text-indigo-500 text-xs font-black uppercase tracking-widest"
             >
               Portfolio
@@ -260,7 +273,7 @@ export function Projects() {
             <motion.h2
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.3 }}
               transition={{ delay: 0.1 }}
               className="text-4xl md:text-7xl font-black tracking-tighter"
             >
@@ -270,7 +283,7 @@ export function Projects() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.3 }}
             transition={{ delay: 0.2 }}
             className="text-muted-foreground max-w-lg text-lg md:text-xl font-medium leading-relaxed"
           >

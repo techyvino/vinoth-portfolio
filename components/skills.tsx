@@ -89,7 +89,7 @@ export function Skills() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.3 }}
               className="inline-block px-4 py-1.5 rounded-full bg-indigo-500/10 text-indigo-500 text-xs font-bold uppercase tracking-widest"
             >
               Expertise
@@ -97,7 +97,7 @@ export function Skills() {
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.3 }}
               transition={{ delay: 0.1 }}
               className="text-4xl md:text-7xl font-black tracking-tighter"
             >
@@ -107,7 +107,7 @@ export function Skills() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.3 }}
             transition={{ delay: 0.2 }}
             className="text-muted-foreground max-w-md text-lg font-medium"
           >
@@ -120,7 +120,7 @@ export function Skills() {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.2 }}
           className="grid md:grid-cols-2 lg:grid-cols-4 gap-8"
         >
           {skillCategories.map((category, idx) => (

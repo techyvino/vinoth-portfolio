@@ -54,7 +54,7 @@ export function Contact() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.3 }}
                 className="inline-block px-4 py-1.5 rounded-full bg-indigo-500/10 text-indigo-500 text-xs font-bold uppercase tracking-widest"
               >
                 Connect
@@ -62,7 +62,7 @@ export function Contact() {
               <motion.h2
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.3 }}
                 className="text-4xl md:text-7xl font-black tracking-tighter"
               >
                 Let&apos;s Build <br />
@@ -93,7 +93,7 @@ export function Contact() {
                   key={i}
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: true, amount: 0.2 }}
                   transition={{ delay: i * 0.1 }}
                   href={item.href}
                   className="flex items-center gap-6 p-6 rounded-3xl border border-border glass hover:border-indigo-500/30 transition-all group"
@@ -117,7 +117,7 @@ export function Contact() {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.3 }}
             className="p-8 md:p-12 rounded-[3rem] border border-border glass shadow-2xl shadow-indigo-500/5 relative"
           >
             <form onSubmit={handleSubmit} className="space-y-8 relative z-10">

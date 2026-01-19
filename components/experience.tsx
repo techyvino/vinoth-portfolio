@@ -93,7 +93,7 @@ function ExperienceCard({ exp, index }: { exp: Experience; index: number }) {
       <motion.div
         initial={{ opacity: 0, x: isEven ? 50 : -50 }}
         whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: true, margin: "-100px", amount: 0.2 }}
         transition={{
           duration: 0.7,
           delay: index * 0.1,
@@ -181,7 +181,7 @@ export function Experience() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.3 }}
             className="px-4 py-1.5 rounded-full bg-indigo-500/10 text-indigo-500 text-xs font-black uppercase tracking-widest"
           >
             Journey
@@ -189,7 +189,7 @@ export function Experience() {
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.3 }}
             className="text-4xl md:text-7xl font-black tracking-tighter"
           >
             Work <span className="text-gradient">History</span>
@@ -218,7 +218,7 @@ export function Experience() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.3 }}
           className="mt-32 flex justify-center"
         >
           <div className="flex items-center gap-4 text-muted-foreground font-black uppercase tracking-[0.2em] text-xs">

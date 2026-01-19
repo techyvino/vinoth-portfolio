@@ -53,7 +53,7 @@ export function About() {
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.3 }}
             className="space-y-8"
           >
             <div className="inline-block px-4 py-1.5 rounded-full bg-indigo-500/10 text-indigo-500 text-xs font-bold uppercase tracking-widest">
@@ -89,7 +89,7 @@ export function About() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.2 }}
                 className="group p-8 rounded-[2.5rem] border border-border glass hover:border-indigo-500/30 transition-all duration-500 space-y-2"
               >
                 <div className="text-4xl md:text-5xl font-black text-indigo-500 tracking-tighter group-hover:scale-110 transition-transform origin-left duration-500">
