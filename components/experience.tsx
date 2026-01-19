@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { Section } from "./section";
 import { Zap } from "lucide-react";
 import { useRef } from "react";
@@ -75,7 +75,7 @@ function ExperienceCard({ exp, index }: { exp: Experience; index: number }) {
   return (
     <div
       className={cn(
-        "relative flex items-center justify-between md:justify-normal gap-8 md:gap-0 group",
+        "relative flex items-center justify-between gap-8 md:gap-0 group",
         isEven ? "md:flex-row" : "md:flex-row-reverse",
       )}
     >
@@ -91,22 +91,31 @@ function ExperienceCard({ exp, index }: { exp: Experience; index: number }) {
 
       {/* Content */}
       <motion.div
-        initial={{ opacity: 0, x: isEven ? 30 : -30, scale: 0.95 }}
-        whileInView={{ opacity: 1, x: 0, scale: 1 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{
-          duration: 0.4,
-          delay: index * 0.05,
-          type: "spring",
-          stiffness: 200,
-          damping: 20,
-        }}
+        initial={{ opacity: 0, x: isEven ? -50 : 50 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.6, type: "spring", bounce: 0.4 }}
         whileHover={{
           y: -10,
-          boxShadow: "0 20px 60px rgba(99, 102, 241, 0.15)",
+          boxShadow: "0 25px 50px -12px rgba(99, 102, 241, 0.25)",
         }}
-        className="w-[calc(100%-4rem)] md:w-[42%] p-8 md:p-10 rounded-[2.5rem] border border-border/50 bg-card/50 glass hover:border-indigo-500/30 transition-all duration-500 relative overflow-hidden group/card cursor-pointer"
+        className={cn(
+          "flex-1 md:flex-none md:w-[42%] p-8 md:p-10 rounded-3xl bg-white/70 dark:bg-zinc-900/50 backdrop-blur-xl transition-all duration-500 relative overflow-hidden group/card cursor-default",
+          "ring-1 ring-transparent hover:ring-indigo-500/50 hover:shadow-2xl",
+          isEven ? "md:mr-auto" : "md:ml-auto",
+        )}
       >
+        {/* Connector Line (Desktop Only) - Now purely hover based for consistency */}
+        <div
+          className={cn(
+            "hidden md:block absolute top-1/2 -translate-y-1/2 w-8 h-[2px] bg-linear-to-r transition-all duration-500 opacity-0 group-hover/card:opacity-100 group-hover/card:w-12",
+            isEven
+              ? "-right-8 group-hover/card:-right-12 from-indigo-500 to-transparent rotate-180"
+              : "-left-8 group-hover/card:-left-12 from-indigo-500 to-transparent",
+            exp.color,
+          )}
+        />
+
         {/* Glow Effect */}
         <div
           className={cn(
@@ -116,26 +125,26 @@ function ExperienceCard({ exp, index }: { exp: Experience; index: number }) {
         />
 
         <div className="space-y-6 relative z-10">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="space-y-1">
               <div
                 className={cn(
-                  "text-xs text-nowrap font-black uppercase tracking-[0.2em] mb-2 bg-linear-to-r bg-clip-text text-transparent",
+                  "text-[10px] font-black uppercase tracking-[0.3em] mb-1 bg-linear-to-r bg-clip-text text-transparent opacity-80",
                   exp.color,
                 )}
               >
                 {exp.period}
               </div>
-              <h3 className="text-2xl md:text-3xl font-black tracking-tight leading-tight">
+              <h3 className="text-2xl md:text-3xl font-black tracking-tight leading-none text-zinc-900 dark:text-white">
                 {exp.role}
               </h3>
             </div>
-            <div className="px-4 py-2 rounded-xl bg-background/50 border border-border/50 text-xs font-bold whitespace-nowrap self-start">
+            <div className="px-4 py-2 rounded-xl bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-white/5 text-xs font-bold text-zinc-600 dark:text-zinc-400 whitespace-nowrap self-start sm:self-center transition-colors hover:border-indigo-500/30">
               {exp.company}
             </div>
           </div>
 
-          <p className="text-muted-foreground leading-relaxed font-medium">
+          <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed font-medium text-sm md:text-base">
             {exp.description}
           </p>
 
@@ -147,17 +156,15 @@ function ExperienceCard({ exp, index }: { exp: Experience; index: number }) {
                 initial={{ opacity: 0, x: -10 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
+                transition={{ delay: 0.2 + i * 0.1 }}
               >
-                <motion.div
+                <div
                   className={cn(
-                    "mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 bg-linear-to-br",
+                    "mt-2 w-1.5 h-1.5 rounded-full shrink-0 bg-linear-to-br transition-transform group-hover/item:scale-125",
                     exp.color,
                   )}
-                  whileHover={{ scale: 2, rotate: 360 }}
-                  transition={{ duration: 0.3 }}
                 />
-                <span className="text-sm font-medium text-muted-foreground group-hover/item:text-foreground transition-colors">
+                <span className="text-sm font-medium text-zinc-500 dark:text-zinc-400 group-hover/item:text-zinc-900 dark:group-hover/item:text-zinc-200 transition-colors">
                   {item}
                 </span>
               </motion.div>
@@ -176,7 +183,7 @@ export function Experience() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start end", "end start"],
+    offset: ["start 0.8", "end center"],
   });
 
   const scaleY = useSpring(scrollYProgress, {
@@ -185,12 +192,15 @@ export function Experience() {
     restDelta: 0.001,
   });
 
+  const translateY = useTransform(scaleY, [0, 1], ["0%", "100%"]);
+  const tipOpacity = useTransform(scrollYProgress, [0, 0.05], [0, 1]);
+
   return (
     <Section
       id="experience"
       className="py-20 relative overflow-hidden bg-zinc-50/10 dark:bg-black/20 noise"
     >
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto">
         <div className="flex flex-col items-center text-center space-y-6 mb-32">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -218,10 +228,18 @@ export function Experience() {
 
         <div ref={containerRef} className="relative space-y-24 md:space-y-32">
           {/* Vertical Timeline Line */}
-          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-1 bg-border/30 md:-translate-x-1/2">
+          <div className="absolute left-6 md:left-1/2 top-4 bottom-4 w-0.5 bg-zinc-200 dark:bg-zinc-800 md:-translate-x-1/2 overflow-hidden">
             <motion.div
               style={{ scaleY }}
-              className="absolute inset-0 w-full bg-linear-to-b from-indigo-500 via-purple-500 to-pink-500 origin-top shadow-[0_0_20px_rgba(99,102,241,0.5)]"
+              className="absolute inset-x-0 top-0 w-full bg-linear-to-b from-indigo-500 via-purple-500 to-pink-500 origin-top shadow-[0_0_15px_rgba(99,102,241,0.5)]"
+            />
+            {/* Moving Glow Tip */}
+            <motion.div
+              style={{
+                top: translateY,
+                opacity: tipOpacity,
+              }}
+              className="absolute left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-indigo-500 shadow-[0_0_15px_6px_rgba(99,102,241,0.6)] z-10"
             />
           </div>
 
