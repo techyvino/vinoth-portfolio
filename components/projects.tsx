@@ -173,6 +173,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           src={project.image}
           alt={project.title}
           fill
+          loading="lazy"
           className="object-cover scale-105 group-hover:scale-100 transition-transform duration-700 ease-out"
         />
         {(project.link !== "#" || project.github !== "#") && (
